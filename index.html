@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bride & Groom Wedding</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@400;700&display=swap" rel="stylesheet"> <!-- Khmer font -->
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nokora', 'Segoe UI', sans-serif;
+      color: #18321a;
+      text-align: center;
+      overflow-x: hidden;
+      background: #18321a;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* INTRO SECTION STYLES */
+    .intro-cover {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* Intro pop-up video */
+    .intro-pop-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    /* Intro background video */
+    .intro-bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      display: none;
+    }
+
+    .fixed-button-area {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      pointer-events: auto;
+    }
+
+    .fixed-button-area button {
+      background: none;
+      border: none;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #e9e5d6;
+      cursor: pointer;
+      outline: none;
+      text-shadow: 1px 1px 2px #fff;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .fixed-button-area button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Music Toggle Button */
+    .music-toggle-button {
+      position: fixed;
+      bottom: 95px; /* Adjust as needed to be above the nav bar */
+      right: 20px;
+      z-index: 10000;
+      background: linear-gradient(135deg, #1f4222 0%, #18321a 100%); /* Deeper dark green gradient */
+      border: 2px solid #e9e5d6; /* Keep existing border */
+      border-radius: 50%;
+      width: 45px; /* Smaller size */
+      height: 45px; /* Smaller size */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Slightly reduced shadow for smaller size */
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .music-toggle-button:hover {
+      background: linear-gradient(135deg, #2a5a2e 0%, #1f4222 100%); /* Darker on hover */
+      transform: scale(1.08); /* Adjusted scale for smaller button */
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .music-toggle-button .icon {
+      color: #e9e5d6;
+      font-size: 1.3rem; /* Adjusted icon size */
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+
+    .music-toggle-button:active {
+      transform: scale(0.92);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* MAIN CONTENT STYLES */
+    .main-content {
+      display: none;
+      position: relative;
+    }
+
+    /* Main pop-up video */
+    .main-pop-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    /* Main background video */
+    .main-bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      display: none;
+    }
+
+    .main-overlay {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 100px;
+    }
+
+    /* NAVIGATION BAR */
+    nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 420px;
+      background: #18321a;
+      display: flex;
+      justify-content: center;
+      padding: 15px 10px;
+      z-index: 9999;
+      border-radius: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      border: 2px solid #e9e5d6;
+      display: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    nav ul li {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li a {
+      color: #18321a;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 6px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      min-width: 45px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    nav ul li a:hover {
+      background: #e9e5d6;
+      color: #18321a;
+      box-shadow: 0 2px 8px #e9e5d6bb;
+      transform: translateY(-2px) scale(1.07);
+    }
+
+    nav ul li a::before {
+      font-size: 1.4rem;
+      display: block;
+      margin-bottom: 4px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    /* Custom icons for each nav item */
+    nav ul li:nth-child(1) a::before { content: '📅'; }
+    nav ul li:nth-child(2) a::before { content: '💭'; }
+    nav ul li:nth-child(3) a::before { content: '📸'; }
+    nav ul li:nth-child(4) a::before { content: '🎥'; }
+    nav ul li:nth-child(5) a::before { content: '📍'; }
+    nav ul li:nth-child(6) a::before { content: '💌'; }
+
+    /* CONTENT STYLES */
+    header {
+      padding: 2rem;
+      padding-top: 4rem;
+      position: relative;
+      background: none;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 4px 16px #0004;
+      color: #e9e5d6;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.2rem;
+      font-family: 'Great Vibes', cursive;
+      color: #18321a;
+      text-shadow: 2px 2px 4px #0008;
+    }
+
+    header p {
+      font-style: italic;
+      color: #18321a;
+      text-shadow: 1px 1px 2px #0008;
+    }
+
+    /* Header image specific styling */
+    .header-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      margin: 10px 0;
+      display: block;
+      position: relative;
+      z-index: 5;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+    }
+
+    section,
+    .gallery-item,
+    .video-card,
+    nav,
+    .modal {
+      background: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none;
+      box-shadow: 0 8px 32px rgba(24,50,26,0.18);
+    }
+
+    section {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 20px auto;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border-radius: 18px;
+      position: relative;
+      z-index: 2;
+      color: #e9e5d6;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.5rem;
+      justify-items: center;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-title {
+      font-size: 2rem;
+      font-family: 'Great Vibes', cursive;
+      color: #18321a;
+      margin-bottom: 0.2rem;
+    }
+    .section-divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #18321a 0%, #e9e5d6 100%);
+      border-radius: 2px;
+      margin: 0.5rem auto 1.5rem auto;
+    }
+    .gallery-item {
+      border-radius: 16px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 240px;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      border: 2px solid #e9e5d6;
+      background: #e9e5d6;
+      transition: transform 0.3s, border-color 0.2s;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #18321a11;
+      max-height: 320px;
+      object-fit: contain;
+    }
+    .gallery img:hover {
+      transform: scale(1.07);
+      border-color: #18321a;
+      box-shadow: 0 6px 24px #18321a33;
+    }
+
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 14px;
+      margin-top: 1rem;
+      box-shadow: 0 4px 16px #18321a33;
+      background: #e9e5d6;
+      border: 2px solid #e9e5d6;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      max-height: 250px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(233, 229, 214, 0.5);
+      padding: 0.8rem;
+      box-sizing: border-box;
+      resize: vertical;
+      margin-bottom: 0.5rem;
+      background: rgba(255,255,255,0.5);
+      color: #18321a;
+      font-family: 'Nokora', 'Segoe UI', sans-serif;
+    }
+
+    textarea::placeholder {
+      color: rgba(233, 229, 214, 0.7);
+    }
+
+    button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      background: linear-gradient(90deg, #18321a 0%, #e9e5d6 100%);
+      color: #e9e5d6;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 12px #18321a33;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #e9e5d6 0%, #18321a 100%);
+      color: #18321a;
+      box-shadow: 0 4px 16px #18321a44;
+      transform: scale(1.05);
+    }
+
+    .comments {
+      margin-top: 1rem;
+      background: rgba(233,229,214,0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 2px 8px #18321a11;
+      max-height: 220px;
+      overflow-y: auto;
+      width: 100%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .comment {
+      background: #18321a;
+      padding: 0.7rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px #18321a22;
+      text-align: left;
+      color: #e9e5d6;
+      font-size: 1.05rem;
+      border: 1px solid rgba(233,229,214,0.3);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* RESPONSIVE STYLES */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      section {
+        padding: 1rem;
+        margin: 10px;
+      }
+
+      header {
+        margin: 10px;
+        padding: 1rem;
+        padding-top: 2rem;
+      }
+
+      nav ul {
+        flex-direction: row;
+        gap: 0.3rem;
+      }
+
+      nav ul li a {
+        font-size: 0.7rem;
+      }
+
+      nav ul li a::before {
+        font-size: 1rem;
+      }
+
+      textarea {
+        font-size: 0.9rem;
+      }
+
+      .intro-pop-video,
+      .main-pop-video {
+        width: 95%;
+      }
+
+      .header-image {
+        padding: 5px;
+        margin: 5px 0;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      .gallery img {
+        max-width: 98vw;
+      }
+    }
+
+    /* MODAL STYLES */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 20000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #0008;
+      border: 4px solid #e9e5d6;
+      background: #e9e5d6;
+    }
+    .modal-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: #e9e5d6;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 20001;
+      text-shadow: 0 2px 8px #000a;
+    }
+
+    /* Navigation arrows for modal */
+    .modal-prev, .modal-next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -50px;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      -webkit-user-select: none;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 20001;
+    }
+    .modal-prev {
+      left: 0;
+      border-radius: 3px 0 0 3px;
+    }
+    .modal-next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+    .modal-prev:hover, .modal-next:hover {
+      background-color: rgba(0,0,0,1);
+    }
+
+    /* Video Gallery Section */
+    .video-section {
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .video-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      justify-items: center;
+      align-items: stretch;
+      margin-top: 1rem;
+    }
+    .video-card {
+      border-radius: 16px;
+      padding: 1.2rem 1rem 1.5rem 1rem;
+      width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0;
+      box-sizing: border-box;
+    }
+    .video-card iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      min-height: 180px;
+      max-height: 320px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #18321a11;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.18);
+      display: block;
+    }
+
+    /* Section Sizing and Glassmorphism for Map, Quote, Wishes */
+    #map, #quote, #message {
+      max-width: 600px;
+      min-height: 320px;
+      margin: 32px auto 32px auto;
+      padding: 2.2rem 1.2rem 2.2rem 1.2rem;
+      border-radius: 22px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Location Section */
+    #map h2 {
+      font-size: 2rem;
+      font-family: 'Great Vibes', cursive;
+      color: #18321a;
+      margin-bottom: 0.2rem;
+    }
+    #map .section-divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #18321a 0%, #e9e5d6 100%);
+      border-radius: 2px;
+      margin: 0.5rem auto 1.5rem auto;
+    }
+    #map iframe {
+      width: 100%;
+      max-width: 520px;
+      height: 280px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px #18321a33;
+      margin: 1.2rem 0 0.5rem 0;
+      border: 2px solid rgba(255,255,255,0.18);
+      background: none;
+    }
+    #map p {
+      margin: 1.2rem 0 0 0;
+      width: 100%;
+      text-align: center;
+      color: #18321a;
+    }
+    #map a {
+      background: linear-gradient(90deg, #18321a 0%, #e9e5d6 100%);
+      color: #e9e5d6;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 2px 8px #18321a44;
+      padding: 0.6rem 1.2rem;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    #map a:hover {
+      background: linear-gradient(90deg, #e9e5d6 0%, #18321a 100%);
+      color: #18321a;
+    }
+
+    /* Quote Section */
+    #quote h2 {
+      font-size: 2rem;
+      font-family: 'Great Vibes', cursive;
+      color: #18321a;
+      margin-bottom: 0.2rem;
+    }
+    #quote .section-divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #18321a 0%, #e9e5d6 100%);
+      border-radius: 2px;
+      margin: 0.5rem auto 1.5rem auto;
+    }
+    #quote blockquote {
+      font-size: 1.35rem;
+      color: #18321a;
+      font-family: 'Nokora', 'Segoe UI', sans-serif;
+      background: none;
+      border-left: 5px solid #18321a;
+      border-radius: 12px;
+      margin: 1.5rem auto 0 auto;
+      padding: 1.2rem 1.5rem;
+      max-width: 420px;
+      box-shadow: 0 2px 8px #18321a11;
+      position: relative;
+    }
+    #quote blockquote:before {
+      content: '“';
+      font-size: 2.5rem;
+      color: rgba(233,229,214,0.6);
+      position: absolute;
+      left: 12px;
+      top: 0;
+    }
+    #quote blockquote:after {
+      content: '”';
+      font-size: 2.5rem;
+      color: rgba(233,229,214,0.6);
+      position: absolute;
+      right: 12px;
+      bottom: 0;
+    }
+
+    /* Wishes Section */
+    #message h2 {
+      font-size: 2rem;
+      font-family: 'Great Vibes', cursive;
+      color: #18321a;
+      margin-bottom: 0.2rem;
+    }
+    #message .section-divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #18321a 0%, #e9e5d6 100%);
+      border-radius: 2px;
+      margin: 0.5rem auto 1.5rem auto;
+    }
+    #message form {
+      margin-bottom: 1.2rem;
+      width: 100%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(233,229,214,0.1);
+      border-radius: 14px;
+      padding: 1.2rem 1rem 0.8rem 1rem;
+      box-shadow: 0 2px 8px #18321a11;
+    }
+    #message textarea {
+      width: 100%;
+      min-height: 80px;
+      max-height: 180px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(233, 229, 214, 0.5);
+      padding: 0.8rem;
+      box-sizing: border-box;
+      resize: vertical;
+      margin-bottom: 0.5rem;
+      background: rgba(255,255,255,0.5);
+      color: #18321a;
+    }
+    #message button {
+      width: 100%;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      box-shadow: 0 2px 8px #18321a22;
+    }
+    .comments {
+      margin-top: 1rem;
+      background: rgba(233,229,214,0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 2px 8px #18321a11;
+      max-height: 220px;
+      overflow-y: auto;
+      width: 100%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .comment {
+      background: #18321a;
+      padding: 0.7rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px #18321a22;
+      text-align: left;
+      color: #e9e5d6;
+      font-size: 1.05rem;
+      border: 1px solid rgba(233,229,214,0.3);
+    }
+
+    .video-overlay-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .gif-overlay {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      cursor: pointer;
+      max-width: 200px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .gif-overlay:hover {
+      transform: translateX(-50%) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- INTRO SECTION -->
+  <div class="intro-cover" id="intro">
+    <div class="video-overlay-container">
+      <video id="intro-pop-video" class="intro-pop-video" loop muted playsinline>
+        <source src="Asset/wedding.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <img
+        id="gifEnterButton"
+        src="Asset/wedding(11).gif"
+        alt="Enter Wedding"
+        class="gif-overlay"
+        onclick="startIntroSequence()"
+        style="display: block;"
+      >
+    </div>
+    <!-- Background video (hidden at first) -->
+    <video id="intro-bg-video" class="intro-bg-video" muted playsinline style="display: none;">
+      <source src="Asset/wedding (1).mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+    
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content" id="main" style="display: none;">
+    <!-- Pop-up video -->
+    <video id="main-pop-video" class="main-pop-video" muted playsinline>
+      <source src="Asset/wedding (2).mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <!-- Background video -->
+    <video id="main-bg-video" class="main-bg-video" loop muted playsinline>
+      <source src="Asset/wedding (3).mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <div class="main-overlay">
+      <nav id="main-nav">
+        <ul>
+          <li><a href="#program">Program</a></li>
+          <li><a href="#quote">Quote</a></li>
+          <li><a href="#gallery">Photos</a></li>
+          <li><a href="#videos">Videos</a></li>
+          <li><a href="#map">Map</a></li>
+          <li><a href="#message">Wishes</a></li>
+        </ul>
+      </nav>
+
+      <header>
+        <img src="Asset/Black and White Aesthetic Wedding Timeline Planner (1).png" alt="Wedding Header" class="header-image">
+        <h1>Bride & Groom</h1>
+        <p>Together Forever</p>
+      </header>
+
+      <section id="program">
+        <img src="Asset/Black and White Aesthetic Wedding Timeline Planner.png" alt="Wedding Header" class="header-image">
+      </section>
+
+      <section id="quote">
+        <h2>Our Favorite Quote</h2>
+        <div class="section-divider"></div>
+        <blockquote>Love is not just looking at each other, it's looking in the same direction.</blockquote>
+      </section>
+
+      <section class="gallery" id="gallery">
+        <div class="gallery-title">Our Pre-Wedding Photos</div>
+        <div class="section-divider"></div>
+        <div class="gallery-item"><img src="Asset/photo_1_2025-06-17_23-18-48.jpg" alt="Wedding photo 1" onclick="openModal(0)"></div>
+        <div class="gallery-item"><img src="Asset/photo_2_2025-06-17_23-18-48.jpg" alt="Wedding photo 2" onclick="openModal(1)"></div>
+        <div class="gallery-item"><img src="Asset/photo_3_2025-06-17_23-18-48.jpg" alt="Wedding photo 3" onclick="openModal(2)"></div>
+        <div class="gallery-item"><img src="Asset/photo_1_2025-06-17_23-18-48.jpg" alt="Wedding photo 4" onclick="openModal(3)"></div>
+        <div class="gallery-item"><img src="Asset/photo_2_2025-06-17_23-18-48.jpg" alt="Wedding photo 5" onclick="openModal(4)"></div>
+        <div class="gallery-item"><img src="Asset/photo_3_2025-06-17_23-18-48.jpg" alt="Wedding photo 6" onclick="openModal(5)"></div>
+      </section>
+
+      <section id="videos" class="video-section">
+        <div class="gallery-title">Our Pre-Wedding Videos</div>
+        <div class="section-divider"></div>
+        <div class="video-gallery">
+          <div class="video-card">
+            <iframe src="Asset/AQOzQKUfOyXM_sjxmC0I0YxcRcu2a5sPZ2MVtJCZjRU7V6f_0VxakkyE_QARfjI.mp4" allowfullscreen poster="Asset/photo_1_2025-06-17_23-18-48.jpg"></iframe>
+          </div>
+          <div class="video-card">
+            <iframe src="Asset/AQOzQKUfOyXM_sjxmC0I0YxcRcu2a5sPZ2MVtJCZjRU7V6f_0VxakkyE_QARfjI.mp4" allowfullscreen poster="Asset/photo_2_2025-06-17_23-18-48.jpg"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section id="map">
+        <h2>Wedding Location</h2>
+        <div class="section-divider"></div>
+        <iframe src="https://maps.google.com/maps?q=Premier%20Center%20Sen%20Sok&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+        <p><a href="https://maps.app.goo.gl/RW2Y7RwHH7cxUkbK9" target="_blank">Open in Google Maps</a></p>
+      </section>
+
+      <section id="message">
+        <h2>Send Us Your Wishes</h2>
+        <div class="section-divider"></div>
+        <form onsubmit="addComment(event)">
+          <textarea id="messageInput" placeholder="Say something here" required></textarea><br>
+          <button type="submit">Send</button>
+        </form>
+        <div class="comments" id="commentList"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- IMAGE MODAL -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <span class="modal-close" onclick="closeModal(event)">&times;</span>
+    <img class="modal-content" id="modalImg">
+    <a class="modal-prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="modal-next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="backgroundMusic" loop preload="auto">
+    <source src="Asset/background_music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Music Toggle Button -->
+  <div class="music-toggle-button" onclick="toggleMusic()">
+    <span class="icon" id="musicIcon">&#9658;</span> <!-- Play icon -->
+  </div>
+
+  <script>
+    let slideIndex = 0;
+    let galleryImages = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Show both the GIF and the intro video at first
+      document.getElementById('gifEnterButton').style.display = 'block';
+      const introPopVideo = document.getElementById('intro-pop-video');
+      introPopVideo.style.display = 'block';
+      introPopVideo.muted = true;
+      introPopVideo.play().catch(e => console.log("Pop-up video play error:", e));
+      document.getElementById('intro-bg-video').style.display = 'none';
+      // Collect all gallery image sources
+      document.querySelectorAll('.gallery-item img').forEach(img => {
+        galleryImages.push(img.src);
+      });
+
+      // Preload videos for better performance
+      preloadVideos();
+    });
+
+    function preloadVideos() {
+      // This helps ensure videos are ready when needed
+      const videos = [
+        'Asset/Cream Floral Indian Wedding Invitation Animated Mobile Video (6).mp4',
+        'Asset/Cream Floral Indian Wedding Invitation Animated Mobile Video (7).mp4',
+        'Asset/Cream Floral Indian Wedding Invitation Animated Mobile Video (8).mp4',
+        'Asset/Cream Floral Indian Wedding Invitation Animated Mobile Video (9).mp4'
+      ];
+      
+      videos.forEach(video => {
+        const preload = document.createElement('video');
+        preload.src = video;
+        preload.preload = 'metadata';
+        preload.style.display = 'none';
+        document.body.appendChild(preload);
+      });
+    }
+
+    function startIntroSequence() {
+      const gifBtn = document.getElementById('gifEnterButton');
+      const introPopVideo = document.getElementById("intro-pop-video");
+      const introBgVideo = document.getElementById("intro-bg-video");
+
+      // Hide GIF button
+      gifBtn.style.display = 'none';
+
+      // Hide intro video, show and play background video
+      introPopVideo.style.display = 'none';
+      introBgVideo.style.display = 'block';
+      introBgVideo.muted = true;
+      introBgVideo.play().catch(e => console.log("Background video play error:", e));
+
+      // When background video ends, show main content
+      introBgVideo.onended = function() {
+        showMainContent();
+      };
+    }
+
+    function showMainContent() {
+      // Hide intro section
+      document.getElementById("intro").style.display = "none";
+      
+      // Show main content
+      document.getElementById("main").style.display = "block";
+      
+      // Start main content video sequence
+      startMainSequence();
+    }
+
+    function startMainSequence() {
+      const mainPopVideo = document.getElementById("main-pop-video");
+      const mainBgVideo = document.getElementById("main-bg-video");
+      const mainNav = document.getElementById("main-nav");
+      
+      // Ensure videos can play through
+      mainPopVideo.muted = true;
+      mainBgVideo.muted = true;
+      
+      // Show pop-up video first
+      mainPopVideo.style.display = "block";
+      mainBgVideo.style.display = "none";
+      mainNav.style.display = "none";
+      
+      // Play pop-up video
+      mainPopVideo.play().catch(e => {
+        console.log("Main pop-up video play error:", e);
+        // Fallback if autoplay fails
+        mainPopVideo.style.display = "none";
+        mainBgVideo.style.display = "block";
+        mainBgVideo.play().catch(e => console.log("Main background video play error:", e));
+        mainNav.style.display = "flex";
+      });
+      
+      // After 2 seconds, transition to background video and nav
+      setTimeout(() => {
+        mainPopVideo.pause();
+        mainPopVideo.style.display = "none";
+        mainBgVideo.style.display = "block";
+        mainBgVideo.play().catch(e => console.log("Main background video play error:", e));
+        mainNav.style.display = "flex";
+      }, 2000);
+    }
+
+    function addComment(e) {
+      e.preventDefault();
+      const messageBox = document.getElementById("messageInput");
+      const commentList = document.getElementById("commentList");
+      
+      if (messageBox.value.trim() !== "") {
+        const div = document.createElement("div");
+        div.className = "comment";
+        div.textContent = messageBox.value;
+        commentList.appendChild(div);
+        messageBox.value = "";
+        
+        // Scroll to the new comment
+        div.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Modal for gallery images
+    function openModal(n) {
+      var modal = document.getElementById('imgModal');
+      modal.style.display = 'flex';
+      slideIndex = n;
+      showSlides(slideIndex);
+    }
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function showSlides(n) {
+      if (n > galleryImages.length - 1) { // If went past last image, loop to first
+        slideIndex = 0;
+      } else if (n < 0) { // If went before first image, loop to last
+        slideIndex = galleryImages.length - 1;
+      }
+      document.getElementById('modalImg').src = galleryImages[slideIndex];
+    }
+
+    function closeModal(event) {
+      // Only close if clicking on the modal overlay itself or the close button
+      if (event && (event.target.id === 'imgModal' || event.target.className === 'modal-close')) {
+        document.getElementById('imgModal').style.display = 'none';
+      } else if (!event) { // Allows calling closeModal() directly without an event
+        document.getElementById('imgModal').style.display = 'none';
+      }
+    }
+
+    // Music Player Functions
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const musicIcon = document.getElementById('musicIcon');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        backgroundMusic.pause();
+        musicIcon.innerHTML = '&#9658;'; // Play icon
+      } else {
+        backgroundMusic.play();
+        musicIcon.innerHTML = '&#10074;&#10074;'; // Pause icon
+      }
+      isPlaying = !isPlaying;
+    }
+
+    // Attempt to autoplay (will likely be blocked by browsers, but good practice)
+    document.addEventListener('DOMContentLoaded', () => {
+      backgroundMusic.volume = 0.5; // Set a default volume
+      // Autoplay will likely fail, so the button is essential.
+    });
+  </script>
+</body>
+</html>
